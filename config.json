@@ -1,4 +1,5 @@
 {
   "GCLOUD_PROJECT": "movie-shelf",
-  "DATA_BACKEND": "datastore"
+  "DATA_BACKEND": "datastore",
+  "CLOUD_BUCKET": "movie-photos"
 }

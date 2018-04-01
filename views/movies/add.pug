@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     h3 #{action} book
-    form(method="POST")
+    form(method="POST", enctype="multipart/form-data")
         .form-group
             label(for="title") Title
             input.form-control(type="text", name="title", id="title")
@@ -17,6 +17,8 @@ block content
             input.form-control(type="text", name="description", id="description")
         .form-group
             label(for="duration") Duration
-            input.form-control(type="number", name="description", id="duration")
+            input.form-control(type="number", name="duration", id="duration")
         .form-group
+            label(for="image") Cover Image
+            input.form-control(type="file", name="image", id="image")
         button.btn.btn-success(type="submit") Save

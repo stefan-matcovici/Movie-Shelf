@@ -1,16 +1,17 @@
 extends ../layout
 
 block content
-    h3 Books
+    h3 Movies
 
     a(href="/movies/add", class='btn btn-success btn-sm')
         i.glyphicon.glyphicon-plus
         span  Add movie
 
     each movie in movies
-        .media
+        .card(style={'margin-bottom': '10px','margin-top': '10px', width:'50%', margin:auto})
+            img.card-img-top(src= movie.imageUrl alt="Card image cap" style={height: "80px", width:"80px"})
             a(href=`/movies/${movie.id}`)
-                .media-body
+                .card-body
                     h4= movie.title
                     p= movie.director
 

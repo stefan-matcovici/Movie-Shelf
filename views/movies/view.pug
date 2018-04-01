@@ -1,0 +1,13 @@
+extends ../layout.pug
+
+block content
+    h3 Movie
+        small
+
+    .media
+        .media-body
+            h4= movie.title
+            | &nbsp;
+            small= movie.year
+            h5 By #{movie.director||'unknown'}
+            p= movie.description

@@ -1,7 +1,7 @@
 let LocalStrategy = require('passport-local').Strategy;
 
-function getModel() {
-    return require(`../models/model-${require('../config').get('DATA_BACKEND')}.js`);
+function getUserModel() {
+    return require(`../models/user-model-${require('../config').get('DATA_BACKEND')}.js`);
 }
 
 module.exports = function (passport) {
@@ -11,7 +11,7 @@ module.exports = function (passport) {
     });
 
     passport.deserializeUser(function (id, done) {
-        getModel().read(id, function (err, user) {
+        getUserModel().read(id, function (err, user) {
             done(err, user);
         });
     });
@@ -23,7 +23,7 @@ module.exports = function (passport) {
 
             let userCredentials = {username: username, password: password};
 
-            getModel().get(userCredentials, (err, entity) => {
+            getUserModel().get(userCredentials, (err, entity) => {
                 if (err) {
                     return done(null, false, req.flash('loginMessage', 'Invalid credentials'));
                 }

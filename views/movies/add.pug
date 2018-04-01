@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+    h3 #{action} book
+    form(method="POST")
+        .form-group
+            label(for="title") Title
+            input.form-control(type="text", name="title", id="title")
+        .form-group
+            label(for="director") Director
+            input.form-control(type="text", name="director", id="director")
+        .form-group
+            label(for="year") Year
+            input.form-control(type="number", name="year", id="year")
+        .form-group
+            label(for="description") Description
+            input.form-control(type="text", name="description", id="description")
+        .form-group
+            label(for="duration") Duration
+            input.form-control(type="number", name="description", id="duration")
+        .form-group
+        button.btn.btn-success(type="submit") Save

@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    h3 Books
+
+    a(href="/movies/add", class='btn btn-success btn-sm')
+        i.glyphicon.glyphicon-plus
+        span  Add movie
+
+    each movie in movies
+        .media
+            a(href=`/movies/${movie.id}`)
+                .media-body
+                    h4= movie.title
+                    p= movie.director
+
+    if !movies.length
+        p No movies found.
+
+    if nextPageToken
+        nav
+            ul.pager
+                li
+                    a(href=`?pageToken=${encodeURIComponent(nextPageToken)}`) More

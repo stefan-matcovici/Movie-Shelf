@@ -20,7 +20,7 @@ const config = require('../config');
 const ds = Datastore({
     projectId: config.get('GCLOUD_PROJECT')
 });
-const userKind = 'User';
+const movieKind = 'Movie';
 
 function fromDatastore(obj) {
     obj.id = obj[Datastore.KEY].id;
@@ -43,10 +43,10 @@ function toDatastore(obj, nonIndexed) {
     return results;
 }
 
-function list(limit, token, cb) {
-    const q = ds.createQuery([userKind])
+function list (limit, token, cb) {
+    const q = ds.createQuery([movieKind])
         .limit(limit)
-        .order('title')
+        .order('year')
         .start(token);
 
     ds.runQuery(q, (err, entities, nextQuery) => {
@@ -62,9 +62,9 @@ function list(limit, token, cb) {
 function update(id, data, cb) {
     let key;
     if (id) {
-        key = ds.key([userKind, parseInt(id, 10)]);
+        key = ds.key([movieKind, parseInt(id, 10)]);
     } else {
-        key = ds.key(userKind);
+        key = ds.key(movieKind);
     }
 
     const entity = {
@@ -86,7 +86,7 @@ function create(data, cb) {
 }
 
 function read(id, cb) {
-    const key = ds.key([userKind, parseInt(id, 10)]);
+    const key = ds.key([movieKind, parseInt(id, 10)]);
     ds.get(key, (err, entity) => {
         if (!err && !entity) {
             err = {
@@ -103,7 +103,7 @@ function read(id, cb) {
 }
 
 function _delete(id, cb) {
-    const key = ds.key([userKind, parseInt(id, 10)]);
+    const key = ds.key([movieKind, parseInt(id, 10)]);
     ds.delete(key, cb);
 }
 

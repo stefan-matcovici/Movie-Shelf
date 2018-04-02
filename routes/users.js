@@ -4,11 +4,15 @@ let passport = require('passport');
 
 router.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/loginSuccess',
-        failureRedirect: '/login',
+        successRedirect: '/movies/list',
+        failureRedirect: '/',
         failureFlash : true
     })
 );
+
+router.get('/home', function(req, res, next) {
+    res.render('home');
+});
 
 router.get('/login', (req, res) => {
     res.render('login', { message: req.flash('loginMessage') });

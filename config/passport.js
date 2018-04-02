@@ -17,6 +17,8 @@ module.exports = function (passport) {
     });
 
     passport.use('local', new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password',
             passReqToCallback: true
         },
         function (req, username, password, done) {
@@ -25,6 +27,7 @@ module.exports = function (passport) {
 
             getUserModel().get(userCredentials, (err, entity) => {
                 if (err) {
+                    console.log(err);
                     return done(null, false, req.flash('loginMessage', 'Invalid credentials'));
                 }
 

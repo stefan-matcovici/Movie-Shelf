@@ -1,8 +1,15 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.popover {
+    min-width: 50em !important;
+}
+
+.btn-group.bootstrap-select.show-tick {
+  margin:13%;
 }

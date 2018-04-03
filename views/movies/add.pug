@@ -1,24 +1,79 @@
 extends ../layout
 
 block content
-    h3 #{action} book
-    form(method="POST", enctype="multipart/form-data")
-        .form-group
-            label(for="title") Title
-            input.form-control(type="text", name="title", id="title")
-        .form-group
-            label(for="director") Director
-            input.form-control(type="text", name="director", id="director")
-        .form-group
-            label(for="year") Year
-            input.form-control(type="number", name="year", id="year")
-        .form-group
-            label(for="description") Description
-            input.form-control(type="text", name="description", id="description")
-        .form-group
-            label(for="duration") Duration
-            input.form-control(type="number", name="duration", id="duration")
-        .form-group
-            label(for="image") Cover Image
-            input.form-control(type="file", name="image", id="image")
-        button.btn.btn-success(type="submit") Save
+    //h3 #{action} book
+    //form(method="POST", enctype="multipart/form-data")
+    //    .form-group
+    //        label(for="title") Title
+    //        input.form-control(type="text", name="title", id="title")
+    //    .form-group
+    //        label(for="director") Director
+    //        input.form-control(type="text", name="director", id="director")
+    //    .form-group
+    //        label(for="year") Year
+    //        input.form-control(type="number", name="year", id="year")
+    //    .form-group
+    //        label(for="description") Description
+    //        input.form-control(type="text", name="description", id="description")
+    //    .form-group
+    //        label(for="duration") Duration
+    //        input.form-control(type="number", name="duration", id="duration")
+    //    .form-group
+    //        label(for="image") Cover Image
+    //        input.form-control(type="file", name="image", id="image")
+    //    button.btn.btn-success(type="submit") Save
+
+
+    .row
+        .col-md-6(style={margin:"25%", "margin-top": "15px"})
+            span#formLogin.anchor
+            .card.card-outline-secondary
+                .card-body
+                    form#loginForm.form(role='form', autocomplete='off', novalidate='', method='POST' enctype="multipart/form-data")
+                        .form-group
+                            label(for="title") Title
+                            input.form-control(type="text", name="title", id="title")
+                        .form-group
+                            label(for="director") Director
+                            input.form-control(type="text", name="director", id="director")
+                        .form-group
+                            label(for="year") Year
+                            input.form-control(type="number", name="year", id="year")
+                        .form-group
+                            label(for="description") Description
+                            input.form-control(type="text", name="description", id="description")
+                        .form-group
+                            label(for="duration") Duration
+                            input.form-control(type="number", name="duration", id="duration")
+                        .form-group
+                            label(for="image") Cover Image
+                            input.form-control(type="file", name="image", id="image")
+                        .form-group
+                            select.selectpicker(id="mySelect" multiple='' data-width="75%" style={margin: "13%"})
+                                for topic in topics
+                                    option= topic
+                    button.btn.btn-success(type="button" onClick="onClick()") Save
+
+
+    script.
+
+        var targets = [];
+
+        $('#mySelect').on('hidden.bs.select', function (e) {
+            $.each($(".selectpicker option:selected"), function () {
+                targets.push($(this).val());
+            });
+        });
+
+
+        function onClick() {
+            var form = document.getElementById("loginForm");
+            var hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "topics";
+            hiddenInput.value = JSON.stringify(targets);
+
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        }

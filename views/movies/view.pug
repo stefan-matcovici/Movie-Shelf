@@ -1,10 +1,14 @@
 extends ../layout.pug
 
 block content
-    h3 Movie
-        small
+    .card(style='width: 60%;')
+        img.card-img-top(src= movie.imageUrl, alt='Card image cap', height=256, width=256)
+        .card-body
+            p.card-text
+                | Some quick example text to build on the card title and make up the bulk of the card's content.
 
-    .media
+
+    .card
         .media-body
             h4= movie.title
             | &nbsp;

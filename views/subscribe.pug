@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    select.selectpicker(id="mySelect" multiple='' data-width="75%" style={margin: "13%"})
+        for topic in topics
+            option= topic
+
+    script.
+
+        $('#mySelect').on('hidden.bs.select', function (e) {
+            var targets = [];
+            $.each($(".selectpicker option:selected"), function () {
+                targets.push($(this).val());
+            });
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "/subscribe");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    console.log(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.send(JSON.stringify(targets));
+        });
+
+        var subscribedTopics = !{JSON.stringify(subscribedTopics)}
+        $('.selectpicker').selectpicker('val', subscribedTopics);

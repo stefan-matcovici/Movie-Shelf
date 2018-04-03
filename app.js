@@ -6,8 +6,6 @@ let logger = require('morgan');
 let flash    = require('connect-flash');
 
 let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let moviesRouter = require('./routes/movies');
 
 let passport = require('passport');
 
@@ -35,8 +33,6 @@ require('./config/passport')(passport);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/', usersRouter);
-app.use('/', moviesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

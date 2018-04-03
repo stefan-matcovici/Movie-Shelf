@@ -1,9 +1,12 @@
 let express = require('express');
 let router = express.Router();
 let passport = require('passport');
+let request = require('request');
 const images = require('../lib/images');
 
 const TOPICS = ["comedy", "sci-fi", "horror", "romance", "action", "thriller", "drama", "crime", "mystery", "adventure"];
+
+const sendEmailFunctionUrl = "https://us-central1-movie-shelf.cloudfunctions.net/sendEmail";
 
 function getMovieModel() {
     return require(`../models/movie-model-${require('../config').get('DATA_BACKEND')}.js`);
@@ -58,8 +61,6 @@ router.get('/movies', isLoggedIn, function(req, res, next) {
             return;
         }
 
-        console.log(entities);
-
         res.render('movies/list', {
             movies: entities,
             nextPageToken: cursor
@@ -95,6 +96,41 @@ router.post(
                 next(err);
                 return;
             }
+
+
+            for (var i=0;i<data.topics.length;i++){
+                topic = data.topics[i];
+                getUserModel().getSubscribed(topic, (err, users) => {
+                    if (err) {
+                        next(err);
+                        return;
+                    }
+
+                    console.log(users);
+
+                    let payload = {
+                        to: users.map(user => {return user.username;}),
+                        from: req.user.username,
+                        subject: "Subject",
+                        body: "Look! A new movie in topic " + topic + " was added!"
+                    };
+
+                    let options = {
+                        method: 'post',
+                    };
+
+                    console.log(payload);
+
+                    request.post({
+                        body: payload,
+                        json: true,
+                        url: sendEmailFunctionUrl
+                    }, function(error, response, body){
+                        console.log(body);
+                    });
+                });
+            }
+
             res.redirect(`${req.baseUrl}/movies`);
         });
     }
@@ -105,7 +141,7 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    res.redirect('/login');
+    res.redirect('/');
 }
 
 

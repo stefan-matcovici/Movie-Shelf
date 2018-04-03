@@ -129,11 +129,37 @@ function get(data, cb) {
     });
 }
 
+function getSubscribed(topic, cb) {
+    console.log(topic);
+
+    const loginQuery = ds
+        .createQuery('User')
+        .filter('topics', '=', topic);
+
+    ds.runQuery(loginQuery).then(results => {
+        // console.log(results);
+        const users = results[0];
+
+        if (users.length === 0) {
+            cb({
+                code: 404,
+                message: 'Not found'
+            });
+            return;
+        }
+        cb(null, users.map(user => fromDatastore(user)));
+    }).catch(err => {
+        cb(err);
+    });
+
+}
+
 module.exports = {
     create,
     read,
     update,
     delete: _delete,
     list,
-    get
+    get,
+    getSubscribed
 };

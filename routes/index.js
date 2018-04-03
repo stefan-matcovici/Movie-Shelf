@@ -136,6 +136,27 @@ router.post(
     }
 );
 
+router.get('/signup', function (req, res) {
+    res.render('signup');
+});
+
+router.post('/signup', function (req, res) {
+    let data = {
+        username: req.body.email,
+        password: req.body.password,
+        topics: []
+    };
+
+    getUserModel().create(data, (err, savedData) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        res.render('index', { message: req.flash('loginMessage') });
+    });
+});
+
 function isLoggedIn(req, res, next) {
 
     if (req.isAuthenticated())

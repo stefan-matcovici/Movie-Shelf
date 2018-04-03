@@ -44,7 +44,11 @@ html(lang='en')
               span.label-input100 Password
               input.input100(type='password', name='password', placeholder='Enter password')
               span.focus-input100
-            .container-login100-form-btn
+            .flex-sb-m.w-full.p-b-30
+              div
+                a.txt1(href='signup')
+                  | Sign up?
+            .container-login100-form-btn(style={display: inline})
               button.login100-form-btn(type='submit')
                 | Login
     // ===============================================================================================
